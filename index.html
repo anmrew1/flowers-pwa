@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цветы для тебя 🌸</title>
+
+    <style>
+        /* ——— СТИЛИ ——— */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Comic Sans MS", cursive;
+            background: linear-gradient(135deg, #ffb6c1, #d8bfd8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .flowers {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .flower {
+            width: 100px;
+            height: 100px;
+            background: url('https://cdn-icons-png.flaticon.com/512/616/616408.png') no-repeat center/contain;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .flower:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            padding: 20px 30px;
+            font-size: 1.2em;
+            text-align: center;
+            color: #444;
+            z-index: 10;
+        }
+
+        .message.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -60%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 5;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Собери все цветы 💐</h1>
+    <div class="flowers">
+        <div class="flower" data-message="Ты как Wi-Fi — я сразу чувствую связь! 💫"></div>
+        <div class="flower" data-message="Если бы ты была цветком — то самым редким 🌷"></div>
+        <div class="flower" data-message="Твой смех — мой любимый саундтрек 🎶"></div>
+        <div class="flower" data-message="Ты — мой солнечный луч ☀️"></div>
+        <div class="flower" data-message="С тобой даже звёзды улыбаются ✨"></div>
+        <div class="flower" data-message="💖 Наш день — с этого всё началось..."></div>
+    </div>
+
+    <div class="overlay"></div>
+    <div class="message"></div>
+
+    <script>
+        // ——— ЛОГИКА ———
+        const flowers = document.querySelectorAll('.flower');
+        const messageBox = document.querySelector('.message');
+        const overlay = document.querySelector('.overlay');
+        let opened = 0;
+
+        flowers.forEach(flower => {
+            flower.addEventListener('click', () => {
+                const message = flower.getAttribute('data-message');
+                messageBox.textContent = message;
+                messageBox.classList.add('show');
+                overlay.classList.add('show');
+                opened++;
+
+                // если это последний цветок:
+                if (opened === flowers.length) {
+                    setTimeout(() => {
+                        messageBox.textContent = "🌌 С этого момента началась магия... 🌌";
+                    }, 2000);
+                }
+            });
+        });
+
+        overlay.addEventListener('click', () => {
+            messageBox.classList.remove('show');
+            overlay.classList.remove('show');
+        });
+    </script>
+</body>
+</html>
